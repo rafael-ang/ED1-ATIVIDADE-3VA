@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct arvore{
+  int info;
+  struct arvore* dir;
+  struct arvore* esq; 
+} Arvore;
+
+Arvore* cria_arvore(){
+  return NULL;
+}
+
+int arvore_e_vazia(Arvore* t){
+  return t == NULL;
+}
+
+void exibe_arvore(Arvore* t){
+  if(!arvore_e_vazia(t)){ 
+    printf("%d |", t->info); 
+    exibe_arvore(t->esq);
+    exibe_arvore(t->dir);
+  }
+  printf(" \n");
+}
+
+
+void insere_elemento(Arvore** t, int info){
+
+  if(*t == NULL){
+    *t = (Arvore*)malloc(sizeof(Arvore));
+    (*t)->esq = NULL;
+    (*t)->dir = NULL;
+    (*t)->info = info;
+  } else {
+    if(info < (*t)->info){
+      insere_elemento(&(*t)->esq, info); 
+    }
+    if(info > (*t)->info){
+      insere_elemento(&(*t)->dir, info); 
+    }
+  }
+}
+
+int main(){
+  Arvore* t = cria_arvore();
+
+  insere_elemento(&t, 40); 
+  insere_elemento(&t, 50); 
+  insere_elemento(&t, 30); 
+  insere_elemento(&t, 25); 
+  insere_elemento(&t, 60); 
+
+  exibe_arvore(t);
+
+  free(t);
+
+  return 0;
+} 
